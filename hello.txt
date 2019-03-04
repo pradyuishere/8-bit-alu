@@ -1,0 +1,4 @@
+HLT
+NOP
+ADD 5
+LXI 3 800
