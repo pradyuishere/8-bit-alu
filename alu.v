@@ -69,38 +69,73 @@ module alu
         begin
           if(finished & enable & input_ready)
             begin
+              
               if(opcode == ADD)
                 begin
-                  result_out <= (operand_A + operand_B)[7:0];
+                  if(operand_A + operand_B < -128)
+                    begin
+                      borrow_out <= 1;
+                      result_out <= 8'b256 - operand_A - operand_B;
+                    end
                   
                   if(operand_A + operand_B > 127)
-                    carry_out = 1;
+                    begin
+                      carry_out <= 1;
+                      result_out <= (operand_A + operand_B)[7:0];
+                    end
                   
                   finished <= 1;
                   result_ready <= 1;
                 end
+              
               if(opcode == CADD)
                 begin
-                  result_out <= (operand_A + operand_B + carry_in)[7:0];
+                  if(operand_A + operand_B + carry_in < -128)
+                    begin
+                      borrow_out <= 1;
+                      result_out <= 8'b256 - operand_A + operand_B+carry_in;
+                    end
                   
-                  if(operand_A + operand_B + carry_in> 127)
-                    carry_out = 1;
-                  
+                  if(operand_A + operand_B + carry_in > 127)
+                    begin
+                      carry_out <= 1;
+                      result_out <= (operand_A + operand_B + carry_in)[7:0];
+                    end
                   finished <= 1;
                   result_ready <= 1;
                 end
+              
               if(opcode == SUB)
                 begin
-                  if(operand_A - operand_B < 0)
-                    borrow_out <= 1;
-                    result_out <= 8'b256 - operand_A + operand_B;
+
+                  if(operand_A - operand_B < -128)
+                    begin
+                      borrow_out <= 1;
+                      result_out <= 8'b256 - operand_A + operand_B;
+                    end
+                  
+                  if(operand_A - operand_B > 127)
+                    begin
+                      carry_out <= 1;
+                      result_out <= (operand_A - operand_B)[7:0];
+                    end
                 end
+              
               if(opcode == BSUB)
                 begin
-                  if(operand_A - operand_B - borrow_in < 0)
-                    borrow_out <= 1;
-                    result_out <= 8'b256 - operand_A + operand_B + borrow_in;
+                  if(operand_A - operand_B - borrow_in < -128)
+                    begin
+                      borrow_out <= 1;
+                      result_out <= 256 - operand_A + operand_B + borrow_in;
+                    end
+                  
+                  if(operand_A - operand_B - borrow_in > 127)
+                    begin
+                      carry_out <= 1;
+                      result_out <= (operand_A - operand_B - borrow_in)[7:0];
+                    end
                 end
+              
               if(opcode == NEG)
                 begin
                   
