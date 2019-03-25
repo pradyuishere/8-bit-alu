@@ -1,3 +1,24 @@
+`define ADD 0
+`define CADD 1
+`define SUB 2
+`define BSUB 3
+`define NEG 4
+`define INC 5
+`define DEC 6
+`define PASS 7
+`define AND 8
+`define OR 9
+`define XOR 10
+`define COMP 11
+`define L_ARITH_SHIFT 12
+`define R_ARITH_SHIFT 13
+`define L_LOG_SHIFT 14
+`define R_LOG_SHIFT 15
+`define L_ROT 16
+`define R_ROT 17
+`define L_CROT 18
+`define R_CROT 19
+
 module alu
 (
   input clk,
@@ -46,7 +67,19 @@ module alu
         begin
           if(finished & enable & input_ready)
             begin
-              
+              if(opcode == ADD)
+                begin
+                  {carry_out, result_out} <= operand_A + operand_B;
+                  finished <= 1;
+                  result_ready <= 1;
+                end
+              if(opcode == CADD)
+                begin
+                  {carry_out, result_out} <= operand_A + operand_B +carry_in;
+                  finished <= 1;
+                  result_ready <= 1;
+                end
+              if(opcode == SUB)
             end
         end
     end
