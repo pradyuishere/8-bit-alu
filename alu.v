@@ -30,7 +30,7 @@ module alu
   input carry_in,
   input borrow_in,
   input rst,
-  output y_out,
+  output result_out,
   output borrow_out,
   output result_ready,
   output carry_out,
@@ -43,7 +43,7 @@ module alu
   reg [4:0] opcode;
   reg [7:0] signed operand_A;
   reg [7:0] signed operand_B;
-  reg [7:0] signed result_ready;
+  reg [7:0] signed result_out;
 
   reg finished;
   reg running;
@@ -67,7 +67,7 @@ module alu
         end
       else
         begin
-          if(finished & enable & input_ready)
+          if(finished && enable && input_ready)
             begin
               
               if(opcode == ADD)
@@ -78,12 +78,13 @@ module alu
                       result_out <= 8'b256 - operand_A - operand_B;
                     end
                   
-                  if(operand_A + operand_B > 127)
+                  else if(operand_A + operand_B > 127)
                     begin
                       carry_out <= 1;
                       result_out <= (operand_A + operand_B)[7:0];
                     end
-                  
+                  else
+                    result_out <= operand_A + operand_B;                  
                   finished <= 1;
                   result_ready <= 1;
                 end
@@ -96,11 +97,13 @@ module alu
                       result_out <= 8'b256 - operand_A + operand_B+carry_in;
                     end
                   
-                  if(operand_A + operand_B + carry_in > 127)
+                  else if(operand_A + operand_B + carry_in > 127)
                     begin
                       carry_out <= 1;
                       result_out <= (operand_A + operand_B + carry_in)[7:0];
                     end
+                  else
+                    result_out <= operand_A + operand_B + carry_in;
                   finished <= 1;
                   result_ready <= 1;
                 end
@@ -114,11 +117,13 @@ module alu
                       result_out <= 8'b256 - operand_A + operand_B;
                     end
                   
-                  if(operand_A - operand_B > 127)
+                  else if(operand_A - operand_B > 127)
                     begin
                       carry_out <= 1;
                       result_out <= (operand_A - operand_B)[7:0];
                     end
+                  else
+                    result_out <= operand_A - operand_B;
                 end
               
               if(opcode == BSUB)
@@ -129,17 +134,59 @@ module alu
                       result_out <= 256 - operand_A + operand_B + borrow_in;
                     end
                   
-                  if(operand_A - operand_B - borrow_in > 127)
+                  else if(operand_A - operand_B - borrow_in > 127)
                     begin
                       carry_out <= 1;
                       result_out <= (operand_A - operand_B - borrow_in)[7:0];
                     end
+                  else
+                    result_out <= operand_A - operand_B - borrow_in;
                 end
               
               if(opcode == NEG)
                 begin
-                  
+                  result_out <= -operand_A;
                 end
+              
+              if(opcode == INC)
+                begin
+                  if(operand_A + 1 > 127)
+                    begin
+                      carry_out = 1;
+                      result_out <= -128;
+                    end
+                  else
+                    result_out <= operand_A + 1;
+                end
+              
+              if(opcode == DEC)
+                begin
+                  if(operand_A - 1 < -128)
+                    begin
+                      borrow_out <= 1;
+                      result_out <= 127
+                    end
+                  else
+                    result_out <= operand_A - 1;
+                end
+              
+              if(opcode == PASS)
+                begin
+                  result_out <= operand_A;
+                end
+              
+              if(opcode == AND)
+                result_out <= operand_A & operand_B;
+              
+              if(opcode == OR)
+                result_out <= operand_A | operand_B;
+              
+              if(opcode == XOR)
+                result_out <= operand_A ^ operand_B;
+              
+              if(opcode == COMP)
+                result_out <= ~operand_A;
+              
             end
         end
     end
