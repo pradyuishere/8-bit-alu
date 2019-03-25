@@ -187,6 +187,57 @@ module alu
               if(opcode == COMP)
                 result_out <= ~operand_A;
               
+              if(opcode == L_ARITH_SHIFT)
+                begin
+                  result_out[0] <= 0;
+                  result_out[7:1] <= operand_A[6:0];
+                end
+              
+              if(opcode == R_ARITH_SHIFT)
+                begin
+                  result_out[7] <= operand_A[7];
+                  result_out[6:0] <= operand_A[7:1];
+                end
+              
+              
+              if(opcode == L_LOG_SHIFT)
+                begin
+                  result_out[0] <= 0;
+                  result_out[7:1] <= operand_A[6:0];
+                end
+              
+              if(opcode == R_LOG_SHIFT)
+                begin
+                  result_out[7] <= 0;
+                  result_out[6:0] <= operand_A[7:1];
+                end
+              
+              if(opcode == L_ROT)
+                begin
+                  result_out[0] <= operand_A[7];
+                  result_out[7:1] <= operand_A[6:0];
+                end
+              
+              if(opcode == R_ROT)
+                begin
+                  result_out[7] <= operand_A[0];
+                  result_out[6:0] <= operand_A[7:1];
+                end
+              
+              if(opcode == L_CROT)
+                begin
+                  carry_out <= operand_A[7];
+                  result_out[7:1] <= operand_A[6:0];
+                  result_out[0] <= carry_in;
+                end
+              
+              if(opcode == R_CROT)
+                begin
+                  carry_out <= operand_A[0];
+                  result_out[7] <= carry_in;
+                  result_out[6:0] <= operand_A[7:1];
+                end
+              
             end
         end
     end
