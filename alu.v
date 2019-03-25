@@ -28,8 +28,10 @@ module alu
   input enable,
   input input_ready,
   input carry_in,
+  input borrow_in,
   input rst,
   output y_out,
+  output borrow_out,
   output result_ready,
   output carry_out,
   output zero,
@@ -39,9 +41,9 @@ module alu
 );
 
   reg [4:0] opcode;
-  reg [7:0] operand_A;
-  reg [7:0] operand_B;
-  reg [7:0] result_ready;
+  reg [7:0] signed operand_A;
+  reg [7:0] signed operand_B;
+  reg [7:0] signed result_ready;
 
   reg finished;
   reg running;
@@ -69,17 +71,40 @@ module alu
             begin
               if(opcode == ADD)
                 begin
-                  {carry_out, result_out} <= operand_A + operand_B;
+                  result_out <= (operand_A + operand_B)[7:0];
+                  
+                  if(operand_A + operand_B > 127)
+                    carry_out = 1;
+                  
                   finished <= 1;
                   result_ready <= 1;
                 end
               if(opcode == CADD)
                 begin
-                  {carry_out, result_out} <= operand_A + operand_B +carry_in;
+                  result_out <= (operand_A + operand_B + carry_in)[7:0];
+                  
+                  if(operand_A + operand_B + carry_in> 127)
+                    carry_out = 1;
+                  
                   finished <= 1;
                   result_ready <= 1;
                 end
               if(opcode == SUB)
+                begin
+                  if(operand_A - operand_B < 0)
+                    borrow_out <= 1;
+                    result_out <= 8'b256 - operand_A + operand_B;
+                end
+              if(opcode == BSUB)
+                begin
+                  if(operand_A - operand_B - borrow_in < 0)
+                    borrow_out <= 1;
+                    result_out <= 8'b256 - operand_A + operand_B + borrow_in;
+                end
+              if(opcode == NEG)
+                begin
+                  
+                end
             end
         end
     end
