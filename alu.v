@@ -22,222 +22,238 @@
 module alu
 (
   input clk,
-  input opcode,
-  input operand_A,
-  input operand_B,
+  input [4:0] opcode,
+  input signed [7:0] operand_A,
+  input signed [7:0] operand_B,
   input enable,
   input input_ready,
   input carry_in,
   input borrow_in,
   input rst,
-  output result_out,
-  output borrow_out,
-  output result_ready,
-  output carry_out,
+  output reg signed [7:0] result_out,
+  output reg borrow_out,
+  output reg result_ready,
+  output reg carry_out,
   output zero,
   output negative,
-  output overflow,
-  output parity
+  output reg overflow
 );
 
-  reg [4:0] opcode;
-  reg [7:0] signed operand_A;
-  reg [7:0] signed operand_B;
-  reg [7:0] signed result_out;
+  
+  reg signed [7:0] tmp;
 
   reg finished;
   reg running;
-  
-  reg add_instr, addc_instr, sub_instr, subb_instr, neg_instr, inc_instr, dec_instr, pass_instr, and_instr, or_instr, xor_instr;
-  reg comp_instr, l_arith_shft_instr, r_arith_shft_instr, l_log_shft_instr, r_log_shft_instr, l_rot_instr, r_rot_instr, l_crot_instr, r_crot_instr;
+
+  assign zero = ~(&(result_out));
+  assign negative = (result_out < 0);  
 
   always@( posedge clk)
     begin
       if(rst)
         begin
           carry_out <= 0;
-          zero <= 0;
           result_ready <= 0;
-          y_out <= 0;
-          negative <= 0;
+          result_out <= 0;
           overflow <= 0;
-          parity <= 0;
           finished <= 1;
           running <= 0;
         end
       else
         begin
-          if(finished && enable && input_ready)
+          if(enable && input_ready)
             begin
+              result_ready <= 0;
+              overflow <= 0;
+              result_out <= 0;
+              carry_out <= 0;
+              borrow_out <= 0;
               
-              if(opcode == ADD)
+              if(opcode == 0)
                 begin
-                  if(operand_A + operand_B < -128)
+                  if($signed(operand_A + operand_B) < $signed(-128))
                     begin
                       borrow_out <= 1;
-                      result_out <= 8'b256 - operand_A - operand_B;
+                      result_out <= 255 - operand_A - operand_B;
+                      overflow <= 1;
                     end
                   
-                  else if(operand_A + operand_B > 127)
+                  else if($signed(operand_A + operand_B) > 127)
                     begin
                       carry_out <= 1;
-                      result_out <= (operand_A + operand_B)[7:0];
+                      // tmp = operand_A + operand_B;
+                      result_out <= operand_A + operand_B;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A + operand_B;                  
-                  finished <= 1;
-                  result_ready <= 1;
+
                 end
               
-              if(opcode == CADD)
+              if(opcode == 1)
                 begin
-                  if(operand_A + operand_B + carry_in < -128)
+                  // $display("In alu operand_A : %d, sum : %d", operand_A, operand_A + operand_B + carry_in );
+                  if($signed(operand_A + operand_B + carry_in) < $signed(-128))
                     begin
+                      $display("In <-127");
+                      // $display("In alu operand_A : %d, operand_B : %d, carry_in : %d sum : %d", operand_A, operand_B, carry_in,255-( operand_A + operand_B + carry_in));
                       borrow_out <= 1;
-                      result_out <= 8'b256 - operand_A + operand_B+carry_in;
+                      result_out <= 255 - operand_A - operand_B - carry_in;
+                      overflow <= 1;
                     end
                   
-                  else if(operand_A + operand_B + carry_in > 127)
+                  else if($signed(operand_A + operand_B + carry_in) > 127)
                     begin
                       carry_out <= 1;
-                      result_out <= (operand_A + operand_B + carry_in)[7:0];
+                      result_out <= operand_A + operand_B + carry_in;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A + operand_B + carry_in;
-                  finished <= 1;
-                  result_ready <= 1;
+
                 end
               
-              if(opcode == SUB)
+              if(opcode == 2)
                 begin
-
-                  if(operand_A - operand_B < -128)
+                  $display("In alu operand_A : %d, sum : %b", operand_A, $signed(operand_A - operand_B));
+                  if($signed(operand_A - operand_B) < $signed(-128))
                     begin
                       borrow_out <= 1;
-                      result_out <= 8'b256 - operand_A + operand_B;
+                      result_out <= 255 - operand_A + operand_B;
+                      overflow <= 1;
                     end
                   
-                  else if(operand_A - operand_B > 127)
+                  else if($signed(operand_A - operand_B) > 127)
                     begin
                       carry_out <= 1;
-                      result_out <= (operand_A - operand_B)[7:0];
+                      result_out <= operand_A - operand_B;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A - operand_B;
+
                 end
               
-              if(opcode == BSUB)
+              if(opcode == 3)
                 begin
-                  if(operand_A - operand_B - borrow_in < -128)
+                  // $display("In alu operand_A : %d, sum : %d", operand_A, operand_A - operand_B - carry_in );
+                  if($signed(operand_A - operand_B - borrow_in) <$signed(-128))
                     begin
                       borrow_out <= 1;
-                      result_out <= 256 - operand_A + operand_B + borrow_in;
+                      result_out <= 255 - operand_A + operand_B + borrow_in;
+                      overflow <= 1;
                     end
                   
-                  else if(operand_A - operand_B - borrow_in > 127)
+                  else if($signed(operand_A - operand_B - borrow_in) > 127)
                     begin
                       carry_out <= 1;
-                      result_out <= (operand_A - operand_B - borrow_in)[7:0];
+                      result_out <= operand_A - operand_B - borrow_in;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A - operand_B - borrow_in;
+
                 end
               
-              if(opcode == NEG)
+              if(opcode == 4)
                 begin
                   result_out <= -operand_A;
                 end
               
-              if(opcode == INC)
+              if(opcode == 5)
                 begin
-                  if(operand_A + 1 > 127)
+                  if($signed(operand_A + 1) > 127)
                     begin
                       carry_out = 1;
                       result_out <= -128;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A + 1;
+
                 end
               
-              if(opcode == DEC)
+              if(opcode == 6)
                 begin
-                  if(operand_A - 1 < -128)
+                  if($signed(operand_A - 1) < $signed(-128))
                     begin
                       borrow_out <= 1;
-                      result_out <= 127
+                      result_out <= 127;
+                      overflow <= 1;
                     end
                   else
                     result_out <= operand_A - 1;
+
                 end
               
-              if(opcode == PASS)
+              if(opcode == 7)
                 begin
                   result_out <= operand_A;
                 end
               
-              if(opcode == AND)
+              if(opcode == 8)
                 result_out <= operand_A & operand_B;
               
-              if(opcode == OR)
+              if(opcode == 9)
                 result_out <= operand_A | operand_B;
               
-              if(opcode == XOR)
+              if(opcode == 10)
                 result_out <= operand_A ^ operand_B;
               
-              if(opcode == COMP)
+              if(opcode == 11)
                 result_out <= ~operand_A;
               
-              if(opcode == L_ARITH_SHIFT)
+              if(opcode == 12)
                 begin
                   result_out[0] <= 0;
                   result_out[7:1] <= operand_A[6:0];
                 end
               
-              if(opcode == R_ARITH_SHIFT)
+              if(opcode == 13)
                 begin
                   result_out[7] <= operand_A[7];
                   result_out[6:0] <= operand_A[7:1];
                 end
               
               
-              if(opcode == L_LOG_SHIFT)
+              if(opcode == 14)
                 begin
                   result_out[0] <= 0;
                   result_out[7:1] <= operand_A[6:0];
                 end
               
-              if(opcode == R_LOG_SHIFT)
+              if(opcode == 15)
                 begin
                   result_out[7] <= 0;
                   result_out[6:0] <= operand_A[7:1];
                 end
               
-              if(opcode == L_ROT)
+              if(opcode == 16)
                 begin
                   result_out[0] <= operand_A[7];
                   result_out[7:1] <= operand_A[6:0];
                 end
               
-              if(opcode == R_ROT)
+              if(opcode == 17)
                 begin
                   result_out[7] <= operand_A[0];
                   result_out[6:0] <= operand_A[7:1];
                 end
               
-              if(opcode == L_CROT)
+              if(opcode == 18)
                 begin
                   carry_out <= operand_A[7];
                   result_out[7:1] <= operand_A[6:0];
                   result_out[0] <= carry_in;
                 end
               
-              if(opcode == R_CROT)
+              if(opcode == 19)
                 begin
                   carry_out <= operand_A[0];
                   result_out[7] <= carry_in;
                   result_out[6:0] <= operand_A[7:1];
                 end
-              
+              result_ready <= 1;
             end
         end
     end
