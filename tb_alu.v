@@ -27,12 +27,12 @@ module alu_tb();
 
 	initial 
 		begin
-			$monitor("carry_out : %d, borrow_out : %d\nresult_out : %d\n\nopcode : %d, operand_A : %d, operand_B : %d\ncarry_in : %d, borrow_in : %d", carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in);
+			$monitor("carry_out : %d, borrow_out : %d\nresult_out : %b\n\nopcode : %d, operand_A : %b, operand_B : %b\ncarry_in : %d, borrow_in : %d", carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in);
 			clk = 0;
 			rst = 1;
 			opcode = 0;
-			operand_A = -84;
-			operand_B = 68;
+			operand_A = 127;
+			operand_B = 126;
 			input_ready = 1;
 			enable = 1;
 			carry_in = 1;

@@ -40,7 +40,7 @@ module alu
 );
 
   
-  reg signed [7:0] tmp;
+  reg signed [7:0] temp;
 
   reg finished;
   reg running;
@@ -71,101 +71,114 @@ module alu
               
               if(opcode == 0)
                 begin
-                  if($signed(operand_A + operand_B) < $signed(-128))
+                  temp = operand_A+operand_B;
+                  if(operand_A[7]==1 && operand_B[7]==1 && temp[7]==0)
                     begin
                       borrow_out <= 1;
-                      result_out <= 255 - operand_A - operand_B;
+                      result_out <= temp-128;
                       overflow <= 1;
                     end
                   
-                  else if($signed(operand_A + operand_B) > 127)
+                  else if(operand_A[7]==0 && operand_B[7]==0 && temp[7]==1)
                     begin
                       carry_out <= 1;
                       // tmp = operand_A + operand_B;
-                      result_out <= operand_A + operand_B;
+                      result_out <= temp+128;
                       overflow <= 1;
                     end
                   else
-                    result_out <= operand_A + operand_B;                  
+                    result_out <= temp;                  
 
                 end
               
               if(opcode == 1)
                 begin
                   // $display("In alu operand_A : %d, sum : %d", operand_A, operand_A + operand_B + carry_in );
-                  if($signed(operand_A + operand_B + carry_in) < $signed(-128))
+                  temp = operand_A+operand_B+carry_in;
+                  if(operand_A[7]==1 && operand_B[7]==1 && temp[7]==0)
                     begin
-                      $display("In <-127");
-                      // $display("In alu operand_A : %d, operand_B : %d, carry_in : %d sum : %d", operand_A, operand_B, carry_in,255-( operand_A + operand_B + carry_in));
                       borrow_out <= 1;
-                      result_out <= 255 - operand_A - operand_B - carry_in;
+                      result_out <= temp-128;
                       overflow <= 1;
                     end
                   
-                  else if($signed(operand_A + operand_B + carry_in) > 127)
+                  else if(operand_A[7]==0 && operand_B[7]==0 && temp[7]==1)
                     begin
                       carry_out <= 1;
-                      result_out <= operand_A + operand_B + carry_in;
+                      // tmp = operand_A + operand_B;
+                      result_out <= temp+128;
                       overflow <= 1;
                     end
                   else
-                    result_out <= operand_A + operand_B + carry_in;
-
+                    result_out <= temp;
                 end
               
               if(opcode == 2)
                 begin
-                  $display("In alu operand_A : %d, sum : %b", operand_A, $signed(operand_A - operand_B));
-                  if($signed(operand_A - operand_B) < $signed(-128))
+                  // $display("In alu operand_A : %d, sum : %d", operand_A, $signed(operand_A - operand_B));
+                  temp = operand_A - operand_B;
+                  if(operand_A[7]==1 && operand_B[7]==0 && temp[7]==0)
                     begin
+                      // $display("In <-127");
                       borrow_out <= 1;
-                      result_out <= 255 - operand_A + operand_B;
+                      result_out <= temp-128;
                       overflow <= 1;
                     end
-                  
-                  else if($signed(operand_A - operand_B) > 127)
+                  // operand_A[7]==0 && operand_B[7]==1 && temp[7]==0
+                  else if(operand_A[7]==0 && operand_B[7]==1 && temp[7]==1)
                     begin
+                      // $display("In >127");
                       carry_out <= 1;
-                      result_out <= operand_A - operand_B;
+                      result_out <= temp+128;
                       overflow <= 1;
                     end
                   else
-                    result_out <= operand_A - operand_B;
+                    result_out <= temp;
 
                 end
               
               if(opcode == 3)
                 begin
                   // $display("In alu operand_A : %d, sum : %d", operand_A, operand_A - operand_B - carry_in );
-                  if($signed(operand_A - operand_B - borrow_in) <$signed(-128))
+                  temp = operand_A - operand_B - borrow_in;
+                  if(operand_A[7]==1 && operand_B[7]==0 && temp[7]==0)
                     begin
+                      // $display("In <-127");
                       borrow_out <= 1;
-                      result_out <= 255 - operand_A + operand_B + borrow_in;
+                      result_out <= temp-128;
                       overflow <= 1;
                     end
-                  
-                  else if($signed(operand_A - operand_B - borrow_in) > 127)
+                  // operand_A[7]==0 && operand_B[7]==1 && temp[7]==0
+                  else if(operand_A[7]==0 && operand_B[7]==1 && temp[7]==1)
                     begin
+                      // $display("In >127");
                       carry_out <= 1;
-                      result_out <= operand_A - operand_B - borrow_in;
+                      result_out <= temp+128;
                       overflow <= 1;
                     end
                   else
-                    result_out <= operand_A - operand_B - borrow_in;
+                    result_out <= temp;
 
                 end
               
               if(opcode == 4)
                 begin
-                  result_out <= -operand_A;
+                  if(operand_A==-128)
+                    begin
+                      carry_out <= 1;
+                      result_out <= 0;
+                      overflow <= 1;
+                    end
+                  else
+                    result_out <= -operand_A;
                 end
               
               if(opcode == 5)
                 begin
-                  if($signed(operand_A + 1) > 127)
+                  if(operand_A==127)
                     begin
-                      carry_out = 1;
-                      result_out <= -128;
+                      carry_out <= 1;
+                      result_out <= 0;
                       overflow <= 1;
                     end
                   else
@@ -175,10 +188,10 @@ module alu
               
               if(opcode == 6)
                 begin
-                  if($signed(operand_A - 1) < $signed(-128))
+                  if(operand_A == -128)
                     begin
                       borrow_out <= 1;
-                      result_out <= 127;
+                      result_out <= -1;
                       overflow <= 1;
                     end
                   else
