@@ -27,7 +27,7 @@ module alu_tb();
 
 	initial 
 		begin
-			$monitor("carry_out : %d, borrow_out : %d\nresult_out : %b\n\nopcode : %d, operand_A : %b, operand_B : %b\ncarry_in : %d, borrow_in : %d", carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in);
+			$monitor("carry_out : %d, borrow_out : %d\nresult_out : %d\n\nopcode : %d, operand_A : %d, operand_B : %d\ncarry_in : %d, borrow_in : %d", carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in);
 			clk = 0;
 			rst = 1;
 			opcode = 0;
@@ -49,11 +49,11 @@ module alu_tb();
 	always@(posedge clk)
 	begin
 		opcode <= (opcode+1)%20;
-		if(opcode == 0)
-		begin
-			operand_A <= operand_A+1;
-			operand_B <= operand_B+1;
-		end
+		// if(opcode == 0)
+		// begin
+			operand_A <= $random;
+			operand_B <= $random;
+		// end
 		input_ready <= 1;
 	end
 
