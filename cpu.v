@@ -2,7 +2,7 @@ module cpu(
 	input clk,
 	input rst,
 	input next_out,
-	output data_out,
+	output reg data_out,
 	output reg [7:0] opcode,
 	output reg signed [7:0] operand_A_out,
 	output reg signed [7:0] operand_B_out,
@@ -70,20 +70,29 @@ module cpu(
 
 
 	always @(posedge clk) begin
+		// $display("Connected rst : %d", rst);
 		if(rst == 1)
 		begin
-			$display("Has been reset\n");
+			// $display("CPU been reset\n");
 			this_instr <= 0;
 			program_counter <= 0;
 			state <= 0;
 			rst_in <= 1;
+			data_out <= 0;
 			
-instr_mem[0]=16'b0000000000000000; 
-instr_mem[1]=16'b0000011000000000; 
-instr_mem[2]=16'b0000111000000001; 
-instr_mem[3]=16'b1000000100000000; 
-instr_mem[4]=16'b1000000100000000; 
-instr_mem[5]=16'b1100001100000100; 
+instr_mem[0]=16'b0000000000000000;
+instr_mem[1]=16'b0000011001100100;
+instr_mem[2]=16'b0000111000101001;
+instr_mem[3]=16'b1000000100000000;
+instr_mem[4]=16'b1000000100000000;
+instr_mem[5]=16'b1010000100000000;
+instr_mem[6]=16'b1011000100000000;
+instr_mem[7]=16'b0000011100000000;
+instr_mem[8]=16'b0000111100000000;
+instr_mem[9]=16'b0001011100000000;
+instr_mem[10]=16'b0001111100000000;
+instr_mem[11]=16'b1100001100000011;
+
 			
 			carry <= 0;
 			borrow <= 0;
@@ -102,6 +111,7 @@ instr_mem[5]=16'b1100001100000100;
 
 			if(state==0)
 			begin
+				// $display("In state 0");
 				temp_16 = instr_mem[program_counter];
 				this_instr <= temp_16[15:8];
 				operand_A <= temp_16[7:0];
@@ -113,6 +123,7 @@ instr_mem[5]=16'b1100001100000100;
 
 			if(state==1)
 			begin
+				// $display("In state 1");
 				state <= 2;
 
 				if(this_instr[7:6]==2'b01)	//instr_mov reg to reg
@@ -184,9 +195,10 @@ instr_mem[5]=16'b1100001100000100;
 
 				if(this_instr[7:3]==5'b10101)	//instr_xra
 				begin
-					operand_A_alu <= registers[this_instr[2:0]];
-					operand_B_alu <= registers[0];
-					opcode_alu <= 8;
+					$display("this_instr[2:0] : %d", this_instr[2:0]);
+					operand_A_alu <= registers[0];
+					operand_B_alu <= registers[this_instr[2:0]];
+					opcode_alu <= 10;
 				end				
 
 				if(this_instr[7:3]==5'b10111)	//instr_cmp
@@ -300,6 +312,7 @@ instr_mem[5]=16'b1100001100000100;
 				if(this_instr[7:3]==5'b10000 || this_instr[7:3]==5'b10001 || this_instr[7:3]==5'b10010 || this_instr[7:3]==5'b10010 || this_instr[7:3]==5'b10100 || this_instr[7:3]==5'b10110 || this_instr[7:3]==5'b10101 ||
 					this_instr[7:0]==8'b00010111 || this_instr[7:0]==8'b00011111 || this_instr[7:0]==8'b00001111 || this_instr[7:0]==8'b00000111 || this_instr[7:0]==8'b00101111 || this_instr[7:0]==8'b00111111)
 				begin
+					$display("result_out_alu : %b", result_out_alu);
 					registers[0] <= result_out_alu;
 					carry <= carry_out_alu;
 					borrow <= borrow_out_alu;
@@ -324,9 +337,14 @@ instr_mem[5]=16'b1100001100000100;
 				carry_out_cpu <= carry_out_alu;
 				borrow_out_cpu <= borrow_out_alu;
 				result_ready <= 1;
+				data_out <= 1;
 				// $display("carry_out : %d\n\n", carry_out_alu);
+				// $display("next_out : %d", next_out);
 				if(next_out == 1)
+				begin
 					state <= 0;
+					data_out <= 0;
+				end
 
 			end 	//state==4 end
 

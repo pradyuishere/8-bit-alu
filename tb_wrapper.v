@@ -1,8 +1,8 @@
 module tb_wrapper();
 
 	reg clk, rst;
-	reg signed [7:0] data_out;
-	reg [2:0] data_type;
+	wire signed [7:0] data_out;
+	wire [2:0] data_type;
 
 	wrapper w1(
 		.clk(clk),
@@ -12,11 +12,13 @@ module tb_wrapper();
 		);
 
 	initial begin
+		$dumpfile("wrapper.vcd");
+		$dumpvars;
 		clk = 0;
-		$monitor("data_out : %d, data_type : %d\nrst : %d\n\n", data_out, data_type, rst);
+		$monitor("data_out : %b, data_type : %d\nrst : %d", data_out, data_type, rst);
 		rst = 1;
 		#50 rst = 0;
-		#1000 $finish;
+		#10000 $finish;
 	end
 
 	always

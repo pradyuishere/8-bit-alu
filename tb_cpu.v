@@ -27,13 +27,15 @@ module tb_cpu();
 		rst = 1;
 		#50 rst = 0;
 		next_out = 1;
-		$monitor("operand_A_out : %d, operand_B_out : %d, opcode : %b \nresult_out : %d, carry_out : %d, borrow_out : %d\n pc : %d", operand_A_out, operand_B_out, opcode_out, result_out, carry_out, borrow_out, pc_out);
+		$monitor("\noperand_A_out : %b, operand_B_out : %b, opcode : %b \nresult_out : %b, carry_out : %b, borrow_out : %b\n pc : %d, data_out : %b\n", operand_A_out, operand_B_out, opcode_out, result_out, carry_out, borrow_out, pc_out, data_out);
 		#20000 $finish;
 	end
 
 	always
 		#5 clk = ~clk;
 
+	always
+		#100 next_out = ~next_out;
 
 
 endmodule // tb_cpu

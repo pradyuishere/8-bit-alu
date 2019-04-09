@@ -5,14 +5,15 @@ module wrapper(
 	output reg [2:0] data_type
 	);
 
-	reg result_ready_cpu, clk_cpu, rst_cpu, next_out_cpu, data_out_cpu, carry_out_cpu, borrow_out_cpu;
-	reg signed [7:0] operand_A, operand_B, result_out_cpu;
-	reg [7:0] opcode_out_cpu, pc_out_cpu;
+	reg  clk_cpu, rst_cpu, next_out_cpu ;
+	wire result_ready_cpu, data_out_cpu, carry_out_cpu, borrow_out_cpu;
+	wire signed [7:0] operand_A, operand_B, result_out_cpu;
+	wire [7:0] opcode_out_cpu, pc_out_cpu;
 
 
 
 	cpu cpu1(
-		.clk(clk_cpu),
+		.clk(clk),
 		.rst(rst_cpu),
 		.next_out(next_out_cpu),
 		.data_out(data_out_cpu),
@@ -26,31 +27,33 @@ module wrapper(
 		.pc_out(pc_out_cpu)
 		);
 
-	initial begin
-		data_type = 0;
-		rst_cpu = 1;
-		#50 rst_cpu = 0;
-		next_out_cpu = 1;
-		#1000 $finish;
-	end
-
 
 	always@(posedge clk)
 	begin
-
+		// $display("data_out_cpu : %d", data_out_cpu);
+		// $display("pc_out_cpu : %d", pc_out_cpu);
 		if(rst)
 		begin
+			// $display("Resetting wrapper");
 			data_type <= 0;
 			rst_cpu <= 1;
+			next_out_cpu <= 1;
 		end
 		else
 		begin
+
+			next_out_cpu <= 0;
+			rst_cpu <= 0;
+			// $display("data_out_cpu : %d", data_out_cpu);
 			if(data_out_cpu == 1)
 			begin
+				// $display("If data_out_cpu == 1"); 
+				next_out_cpu <= 0;
 				data_type = (data_type+1)%7;
 				if(data_type == 0)
 				begin
-					data_out = opcode;
+					$display("opcode_out_cpu : %b",opcode_out_cpu);
+					data_out = opcode_out_cpu;
 				end
 
 				if(data_type == 1)

@@ -4,16 +4,92 @@
 		"selected_items":
 		[
 			[
-				"carry",
+				"Opcode",
+				"opcode_out_cpu"
+			],
+			[
+				"data",
+				"data_out_cpu"
+			],
+			[
+				"pc_",
+				"pc_out_cpu"
+			],
+			[
+				"resul",
+				"result_ready_cpu"
+			],
+			[
+				"dat",
+				"data_out"
+			],
+			[
+				"next_",
+				"next_out_cpu"
+			],
+			[
+				"d",
+				"data_out_cpu"
+			],
+			[
+				"next",
+				"next_out_cpu"
+			],
+			[
+				"pc",
+				"pc_out_cpu"
+			],
+			[
+				"daa",
+				"data_type"
+			],
+			[
+				"rest",
+				"result_out_cpu"
+			],
+			[
+				"da",
+				"data_out"
+			],
+			[
+				"operand",
+				"operand_B"
+			],
+			[
+				"data_",
+				"data_out"
+			],
+			[
+				"opera",
+				"operand_B"
+			],
+			[
+				"opcode",
+				"opcode_out_cpu"
+			],
+			[
+				"data_out",
+				"data_out_cpu"
+			],
+			[
+				"carr",
 				"carry_out_alu"
+			],
+			[
+				"carry",
+				"carry_out"
+			],
+			[
+				"temp_",
+				"temp_state2"
+			],
+			[
+				"temp",
+				"temp_state3"
 			],
 			[
 				"input_read",
 				"input_ready_alu"
-			],
-			[
-				"operand",
-				"operand_A"
 			],
 			[
 				"operan",
@@ -28,16 +104,8 @@
 				"operand_B_out"
 			],
 			[
-				"opera",
-				"operand_A_out"
-			],
-			[
 				"borro",
 				"borrow_out"
-			],
-			[
-				"carr",
-				"carry_out"
 			],
 			[
 				"re",
@@ -72,16 +140,8 @@
 				"carry_out_cpu"
 			],
 			[
-				"resul",
-				"result_out_alu"
-			],
-			[
 				"operand_A",
 				"operand_A_out"
-			],
-			[
-				"pc",
-				"program_counter"
 			],
 			[
 				"bo",
@@ -166,10 +226,6 @@
 			[
 				"negat",
 				"negative_out"
-			],
-			[
-				"rest",
-				"result_out"
 			],
 			[
 				"ope",
@@ -432,20 +488,8 @@
 				"ready_bits"
 			],
 			[
-				"d",
-				"display\t$display()"
-			],
-			[
 				"fil",
 				"file_handler"
-			],
-			[
-				"data_",
-				"data_received"
-			],
-			[
-				"temp",
-				"tempy1"
 			],
 			[
 				"read",
@@ -475,7 +519,16 @@
 			"file": "cpu.v",
 			"settings":
 			{
-				"buffer_size": 7504,
+				"buffer_size": 8160,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "wrapper.v",
+			"settings":
+			{
+				"buffer_size": 1666,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -484,7 +537,16 @@
 			"file": "tb_cpu.v",
 			"settings":
 			{
-				"buffer_size": 885,
+				"buffer_size": 936,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tb_wrapper.v",
+			"settings":
+			{
+				"buffer_size": 441,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -678,6 +740,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"data_out",
+			"carry",
+			"program",
+			"add",
 			"rst",
 			"this_instr",
 			"result_ready",
@@ -740,7 +806,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -756,8 +822,8 @@
 						"selection":
 						[
 							[
-								667,
-								667
+								1378,
+								1378
 							]
 						],
 						"settings":
@@ -779,15 +845,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7504,
+						"buffer_size": 8160,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7381,
-								7381
+								7909,
+								7909
 							]
 						],
 						"settings":
@@ -795,42 +861,98 @@
 							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 5435.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "tb_cpu.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 885,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								785,
-								785
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 342.0,
+						"translation.y": 5928.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
+					"buffer": 2,
+					"file": "wrapper.v",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1477,
+								1477
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
 					"buffer": 3,
+					"file": "tb_cpu.v",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								914,
+								914
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "tb_wrapper.v",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 441,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								237,
+								237
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "compiler.py",
 					"semi_transient": false,
 					"settings":
@@ -853,10 +975,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1197.0,
+						"translation.y": 912.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
