@@ -78,13 +78,12 @@ module cpu(
 			state <= 0;
 			rst_in <= 1;
 			
-			instr_mem[0]=16'b0000000000000000; 
-			instr_mem[1]=16'b0000011000000010; 
-			instr_mem[2]=16'b0000111011110110; 
-			instr_mem[3]=16'b1000000100000000; 
-			instr_mem[4]=16'b0001011000000100; 
-			instr_mem[5]=16'b1001000100000000; 
-			instr_mem[6]=16'b1100001100000011;
+instr_mem[0]=16'b0000000000000000; 
+instr_mem[1]=16'b0000011000000000; 
+instr_mem[2]=16'b0000111000000001; 
+instr_mem[3]=16'b1000000100000000; 
+instr_mem[4]=16'b1000000100000000; 
+instr_mem[5]=16'b1100001100000100; 
 			
 			carry <= 0;
 			borrow <= 0;
@@ -235,8 +234,10 @@ module cpu(
 
 				if(this_instr[7:0]==8'b11000011)	//instr_jmp
 				begin
-					program_counter <= operand_A;
-					state <= 0;
+					// $display("In JMP");
+					// $display("carry_out : %d", carry);
+					program_counter <= operand_A -1;
+					state <= 3;
 				end
 
 				if(this_instr[7:6]==2'b11 && this_instr[2:0]==3'b010)
@@ -245,7 +246,7 @@ module cpu(
 					begin
 						program_counter <= operand_A;
 					end
-					state <= 0;
+					state <= 4;
 				end
 
 				if(this_instr[7:0]==8'b01110110)
@@ -264,7 +265,7 @@ module cpu(
 
 			if(state==2)
 			begin
-
+				// $display("In state 2");
 				if(temp_state2 == 0)
 				begin
 					input_ready_alu <= 1;
@@ -290,6 +291,9 @@ module cpu(
 
 			if(state == 3)
 			begin
+				// $display("pc : %d", program_counter);
+				// $display("In state 3");
+				// $display("in state 3 carry_out_alu : %d",carry_out_alu);
 				input_ready_alu <= 0;
 				state <= 4;
 				program_counter <= program_counter + 1;
@@ -320,7 +324,7 @@ module cpu(
 				carry_out_cpu <= carry_out_alu;
 				borrow_out_cpu <= borrow_out_alu;
 				result_ready <= 1;
-				$display("carry_out : %d\n\n", carry_out_alu);
+				// $display("carry_out : %d\n\n", carry_out_alu);
 				if(next_out == 1)
 					state <= 0;
 

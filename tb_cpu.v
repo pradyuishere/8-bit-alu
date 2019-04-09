@@ -28,16 +28,12 @@ module tb_cpu();
 		#50 rst = 0;
 		next_out = 1;
 		$monitor("operand_A_out : %d, operand_B_out : %d, opcode : %b \nresult_out : %d, carry_out : %d, borrow_out : %d\n pc : %d", operand_A_out, operand_B_out, opcode_out, result_out, carry_out, borrow_out, pc_out);
-		#400 $finish;
+		#20000 $finish;
 	end
 
 	always
 		#5 clk = ~clk;
 
-	always@(posedge clk)
-	begin
 
-
-	end
 
 endmodule // tb_cpu
