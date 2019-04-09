@@ -31,6 +31,7 @@ module cpu(
 	reg rst_in;
 
 	reg [15:0] temp_16;
+	reg temp_state2;
 
 	wire [7:0] result_out_alu;
 	wire carry_out_alu;
@@ -91,6 +92,8 @@ module cpu(
 			begin
 				registers[iterator] <= 0;
 			end
+
+			temp_state2 <= 0;
 		end // If end
 		else	//else
 		begin
@@ -128,8 +131,8 @@ module cpu(
 
 				if(this_instr[7:3]==5'b10000)	//instr_add
 				begin
-					operand_A_alu <= registers[this_instr[2:0]];
-					operand_B_alu <= registers[0];
+					operand_A_alu <= registers[0];
+					operand_B_alu <= registers[this_instr[2:0]];
 					opcode_alu <= 0;
 				end
 
@@ -261,8 +264,21 @@ module cpu(
 
 			if(state==2)
 			begin
-				input_ready_alu <= 1;
-				state <= 3;
+
+				if(temp_state2 == 0)
+				begin
+					input_ready_alu <= 1;
+					temp_state2 <= 1;
+				end
+				else
+				begin
+					input_ready_alu <= 0;
+					temp_state2 <= 0;
+					state <= 3;
+				end
+
+				// input_ready_alu <= 1;
+				// state <= 3;
 				// if(result_ready_alu != 1 && input_ready_alu == 0)
 				// 	input_ready_alu <= 1;
 				// else

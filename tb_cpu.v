@@ -3,8 +3,8 @@ module tb_cpu();
 	reg rst;
 	reg next_out;
 	wire data_out, carry_out, borrow_out, result_ready;
-	wire [7:0] operand_A_out, operand_B_out, result_out, pc_out, opcode_out;
-
+	wire signed [7:0] operand_A_out, operand_B_out, result_out;
+	wire [7:0] pc_out, opcode_out;
 
 	cpu cpu1(
 		.clk(clk),

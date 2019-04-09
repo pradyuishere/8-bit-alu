@@ -4,6 +4,94 @@
 		"selected_items":
 		[
 			[
+				"carry",
+				"carry_out_alu"
+			],
+			[
+				"input_read",
+				"input_ready_alu"
+			],
+			[
+				"operand",
+				"operand_A"
+			],
+			[
+				"operan",
+				"operand_A"
+			],
+			[
+				"op",
+				"opcode_out"
+			],
+			[
+				"operand_",
+				"operand_B_out"
+			],
+			[
+				"opera",
+				"operand_A_out"
+			],
+			[
+				"borro",
+				"borrow_out"
+			],
+			[
+				"carr",
+				"carry_out"
+			],
+			[
+				"re",
+				"result_out_cpu"
+			],
+			[
+				"oper",
+				"operand_B_out"
+			],
+			[
+				"opco",
+				"opcode_out"
+			],
+			[
+				"file",
+				"file2"
+			],
+			[
+				"ne",
+				"next_out"
+			],
+			[
+				"result",
+				"result_ready"
+			],
+			[
+				"borrow",
+				"borrow_out_alu"
+			],
+			[
+				"carry_out",
+				"carry_out_cpu"
+			],
+			[
+				"resul",
+				"result_out_alu"
+			],
+			[
+				"operand_A",
+				"operand_A_out"
+			],
+			[
+				"pc",
+				"program_counter"
+			],
+			[
+				"bo",
+				"borrow_out"
+			],
+			[
+				"result_out",
+				"result_out_alu"
+			],
+			[
 				"result_",
 				"result_ready_alu"
 			],
@@ -16,31 +104,11 @@
 				"negative_out_alu"
 			],
 			[
-				"carr",
-				"carry_out_alu"
-			],
-			[
 				"carry_",
 				"carry_out_alu"
 			],
 			[
-				"resul",
-				"result_ready_alu"
-			],
-			[
-				"borrow",
-				"borrow_out_alu"
-			],
-			[
-				"borro",
-				"borrow_out_alu"
-			],
-			[
 				"resut",
-				"result_out_alu"
-			],
-			[
-				"result",
 				"result_out_alu"
 			],
 			[
@@ -52,32 +120,12 @@
 				"enable_alu"
 			],
 			[
-				"operan",
-				"operand_B_alu"
-			],
-			[
-				"opera",
-				"operand_B"
-			],
-			[
 				"opc",
 				"opcode_alu"
 			],
 			[
 				"opernad_",
 				"operand_B"
-			],
-			[
-				"operand_",
-				"operand_A"
-			],
-			[
-				"operand",
-				"operand_B"
-			],
-			[
-				"oper",
-				"operand_A"
 			],
 			[
 				"first",
@@ -388,10 +436,6 @@
 				"display\t$display()"
 			],
 			[
-				"file",
-				"file_out"
-			],
-			[
 				"fil",
 				"file_handler"
 			],
@@ -428,13 +472,19 @@
 			}
 		},
 		{
-			"contents": "module cpu(\n\tinput clk,\n\tinput rst,\n\toutput data_out,\n\toutput opcode,\n\toutput signed [7:0] operand_A_out,\n\toutput signed [7:0] operand_B_out,\n\toutput signed [7:0] output_ready\n\t);\n\t\n\treg [7:0] this_instr;\n\treg [15:0] instr_mem [0:128];\n\n\treg program_counter;\n\tinteger state;\n\t//state = 0 : instr_read\n\t//state = 1 : load_operands\n\t//state = 2 : perform operation\n\t//state = 3 : save outputs\n\t//state = 4 : update program_counter and send the outputs\n\n\treg carry;\n\treg borrow;\n\treg enable_alu;\n\treg input_ready_alu;\n\treg rst_in;\n\n\twire result_out_alu;\n\twire carry_out_alu;\n\twire borrow_out_alu;\n\twire result_ready_alu;\n\twire zero_out_alu;\n\twire negative_out_alu;\n\twire overflow_out_alu;\n\t\n\treg signed [7:0] operand_A, operand_B;\n\treg signed [7:0] operand_A_alu, operand_B_alu;\n\treg [4:0] opcode_alu;\n\treg signed [7:0] registers [0:7];\n\n\tinteger iterator;\n\n\n\tmodule alu alu1(\n\t\t\t.clk(clk),\n\t\t\t.opcode(opcode_alu),\n\t\t\t.operand_A(operand_A_alu),\n\t\t\t.operand_B(operand_B_alu),\n\t\t\t.enable(enable_alu),\n\t\t\t.input_ready(input_ready_alu),\n\t\t\t.carry_in(carry),\n\t\t\t.borrow_in(borrow),\n\t\t\t.rst(rst_in),\n\t\t\t.result_out(result_out_alu),\n\t\t\t.borrow_out(borrow_out_alu),\n\t\t\t.result_ready(result_ready_alu),\n\t\t\t.carry_out(carry_out_alu),\n\t\t\t.zero(zero_out_alu),\n\t\t\t.negative(negative_out_alu),\n\t\t\t.overflow(overflow_out_alu)\n\t\t);\n\n\n\talways @(posedge clk or negedge rst_n) begin\n\t\tif(reset == 1)\n\t\tbegin\n\t\t\tinstr_mem <= 0;\n\t\t\tprogram_counter <= 0;\n\t\t\tstate <= 0;\n\t\t\trst_in <= 1;\n\n\t\t\tcarry <= 0;\n\t\t\tborrow <= 0;\n\t\t\tfor(iterator = 0; iterator < 8; iterator = iterator + 1)\n\t\t\tbegin\n\t\t\t\tregisters[iterator] <= 0;\n\t\t\tend\n\t\tend // If end\n\t\telse\t//else\n\t\tbegin\n\t\t\t\n\t\t\trst_in <= 0;\n\t\t\tenable_alu <= 1;\n\n\t\t\tif(state==0)\n\t\t\tbegin\n\t\t\t\tthis_instr <= instr_men[program_counter][15:8];\n\t\t\t\toperand_A <= instr_mem[program_counter][7:0];\n\n\t\t\t\tstate <= 1;\n\t\t\tend // if(state==0) end\n\n\t\t\tif(state==1)\n\t\t\tbegin\n\t\t\t\tstate <= 2;\n\n\t\t\t\tif(this_instr[7:6]==2'b01)\t//instr_mov reg to reg\n\t\t\t\tbegin\n\t\t\t\t\tregisters[this_instr[5:3]] = registers[this_instr[2:0]];\n\t\t\t\t\tstate <= 0;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:6]==2'b00 && this_instr[2:0]==3'b110) //instr_mvi\n\t\t\t\tbegin\n\t\t\t\t\tregisters[this_instr[5:3]] = operand_A;\n\t\t\t\t\tstate <= 0;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:3]==5'b10000)\t//instr_add\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[this_instr[2:0]];\n\t\t\t\t\toperand_B_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 0;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:3]==5'b10001)\t//instr_addc\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\toperand_B_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 1;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:3]==5'b10010)\t//instr_sub\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\toperand_B_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 2;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:3]==5'b10010)\t//instr_subb\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\toperand_B_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 3;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:6]==2'b00 && this_instr[2:0]==3'b100) //instr_inr\n\t\t\t\tbegin\n\t\t\t\t\tregisters[this_instr[5:3]] <= operand_A;\n\t\t\t\t\topcode_alu <= 5;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:6]==2'b00 && this_instr[2:0]==3'b101) //instr_dcr\n\t\t\t\tbegin\n\t\t\t\t\tregisters[this_instr[5:3]] <= operand_A;\n\t\t\t\t\topcode_alu <= 6;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:3]==5'b10100)\t//instr_ana\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 8;\n\t\t\t\tend\t\t\t\t\n\n\t\t\t\tif(this_instr[7:3]==5'b10110)\t//instr_ora\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 9;\n\t\t\t\tend\t\t\t\t\n\n\t\t\t\tif(this_instr[7:3]==5'b10101)\t//instr_xra\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 8;\n\t\t\t\tend\t\t\t\t\n\n\t\t\t\tif(this_instr[7:3]==5'b10111)\t//instr_cmp\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\toperand_B_alu <= registers[this_instr[2:0]];\n\t\t\t\t\topcode_alu <= 2;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00000111)\t//instr_rlc\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 16;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00001111)\t//instr_rrc\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 17;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00010111)\t//instr_ral\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 18;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00011111)\t//instr_rar\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 19;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00101111)\t//instr_cma\n\t\t\t\tbegin\n\t\t\t\t\toperand_A_alu <= registers[0];\n\t\t\t\t\topcode_alu <= 11;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00111111)\t//instr_cmc\n\t\t\t\tbegin\n\t\t\t\t\tstate <= 0;\n\t\t\t\t\tcarry <= ~carry;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b11000011)\t//instr_jmp\n\t\t\t\tbegin\n\t\t\t\t\tprogram_counter <= operand_A;\n\t\t\t\t\tstate <= 0;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:6]==2'b11 && this_instr[2:0]==3'b010)\n\t\t\t\tbegin\n\t\t\t\t\tif(registers[this_instr[5:3]] > 0)\n\t\t\t\t\tbegin\n\t\t\t\t\t\tprogram_counter <= operand_A;\n\t\t\t\t\tend\n\t\t\t\t\tstate <= 0;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b01110110)\n\t\t\t\tbegin\n\t\t\t\t\tstate <= 6;\n\t\t\t\tend\n\n\t\t\t\tif(this_instr[7:0]==8'b00000000)\n\t\t\t\tbegin\n\t\t\t\t\tstate <= 0;\n\t\t\t\tend\n\n\t\t\tend \t//state==1 end\n\n\t\t\tif(state==2)\n\t\t\tbegin\n\t\t\t\tif(result_ready_alu != 1)\n\t\t\t\t\tinput_ready_alu <= 1;\n\t\t\t\telse\n\t\t\t\tbegin\n\t\t\t\t\tstate <= 3;\n\t\t\t\tend\n\t\t\tend \t//state==2 end\n\n\t\t\tif(state == 3)\n\t\t\tbegin\n\t\t\t\t\n\t\t\tend\n\n\t\tend   //else end\n\tend  //else always\n\n\nendmodule",
 			"file": "cpu.v",
-			"file_size": 5257,
-			"file_write_time": 131991771508086574,
 			"settings":
 			{
-				"buffer_size": 5261,
+				"buffer_size": 7504,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tb_cpu.v",
+			"settings":
+			{
+				"buffer_size": 885,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -443,7 +493,7 @@
 			"file": "compiler.py",
 			"settings":
 			{
-				"buffer_size": 2869,
+				"buffer_size": 3395,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -628,6 +678,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rst",
+			"this_instr",
+			"result_ready",
 			"head",
 			"temp",
 			"tmp",
@@ -703,8 +756,8 @@
 						"selection":
 						[
 							[
-								652,
-								652
+								667,
+								667
 							]
 						],
 						"settings":
@@ -714,10 +767,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 399.0,
+						"translation.y": 741.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -726,15 +779,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5261,
+						"buffer_size": 7504,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4850,
-								4850
+								7381,
+								7381
 							]
 						],
 						"settings":
@@ -742,7 +795,7 @@
 							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 4135.0,
+						"translation.y": 5435.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -750,19 +803,47 @@
 				},
 				{
 					"buffer": 2,
-					"file": "compiler.py",
+					"file": "tb_cpu.v",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2869,
+						"buffer_size": 885,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2624,
-								2624
+								785,
+								785
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 342.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "compiler.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3395,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								389,
+								389
 							]
 						],
 						"settings":
@@ -772,10 +853,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1134.0,
+						"translation.y": 1197.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
