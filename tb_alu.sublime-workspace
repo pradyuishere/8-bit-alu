@@ -515,38 +515,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "wrapper.v",
-			"settings":
-			{
-				"buffer_size": 1666,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\nset_io clk R9\n\nset_io rst N6\nset_io data_out0 N7\nset_io data_out1 L7\nset_io data_out2 M8\nset_io data_out3 G5\nset_io data_out4 P9\nset_io data_out5 L9\nset_io data_out6 N9\nset_io data_out7 R10\nset_io data_out8 T9\n\nset_io data_type0 T9\nset_io B1 T11\nset_io B2 T10\nset_io B3 T14\nset_io B4 T13\nset_io B5 T15\nset_io B6 R14\nset_io B7 \nset_io req B11",
-			"settings":
-			{
-				"buffer_size": 342,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/vader/Documents/gvv/verilog/fft_module_full.pcf",
-			"settings":
-			{
-				"buffer_size": 247,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/vader/Documents/gvv/verilog/fft_module_full.v",
-			"settings":
-			{
-				"buffer_size": 5718,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -592,7 +560,14 @@
 	},
 	"file_history":
 	[
+		"/home/vader/Documents/gvv/verilog/fft_module_full.v",
 		"/home/vader/Documents/gvv/verilog/fft_module_full.pcf",
+		"/home/vader/Documents/gvv/8-bit-alu/wrapper.pcf",
+		"/home/vader/Documents/gvv/8-bit-alu/tb_cpu.v",
+		"/home/vader/Documents/gvv/8-bit-alu/tb_wrapper.v",
+		"/home/vader/Documents/gvv/8-bit-alu/cpu.v",
+		"/home/vader/Documents/gvv/8-bit-alu/wrapper.v",
+		"/home/vader/Documents/gvv/8-bit-alu/alu.v",
 		"/home/vader/Documents/intro-hdl/pipeline/wide_adder.v",
 		"/home/vader/Documents/intro-hdl/pipeline/rd.v",
 		"/home/vader/Documents/intro-hdl/pipeline/rd_tb.v",
@@ -606,11 +581,6 @@
 		"/home/vader/Documents/intro-hdl/comm/serial/fifo.v",
 		"/home/vader/Documents/intro-hdl/comm/serial/counter.v",
 		"/home/vader/Documents/gvv/8-bit-alu/compiler.py",
-		"/home/vader/Documents/gvv/8-bit-alu/tb_wrapper.v",
-		"/home/vader/Documents/gvv/8-bit-alu/tb_cpu.v",
-		"/home/vader/Documents/gvv/8-bit-alu/wrapper.v",
-		"/home/vader/Documents/gvv/8-bit-alu/cpu.v",
-		"/home/vader/Documents/gvv/8-bit-alu/alu.v",
 		"/home/vader/Documents/gvv/8-bit-alu/cpu.v4",
 		"/home/vader/Documents/data_course/c7/EE16BTECH11017-linked_list.c",
 		"/home/vader/Documents/data_course/c7/linked_list.c",
@@ -693,7 +663,6 @@
 		"/home/vader/Desktop/A1_AML/DecisionTree.py",
 		"/home/vader/Documents/data_course/c3/fibonnaci-no-recursive.c",
 		"/home/vader/Documents/data_course/c3/fibonnaci-recursive.c",
-		"/home/vader/Documents/gvv/verilog/fft_module_full.v",
 		"/home/vader/Documents/gvv/python/filt.py",
 		"/home/vader/Documents/gvv/verilog/fft_module.v",
 		"/home/vader/Documents/gvv/verilog/fft_tb.v",
@@ -718,8 +687,7 @@
 		"/home/vader/icestorm/examples/icemulti/app0.v",
 		"/home/vader/icestorm/examples/iceblink/iceblink.pcf",
 		"/home/vader/icotools/examples/icezero/icezero.v",
-		"/home/vader/verilog_soft/picorv32-master/testbench.v",
-		"/home/vader/verilog_soft/picorv32-master/testbench_ez.v"
+		"/home/vader/verilog_soft/picorv32-master/testbench.v"
 	],
 	"find":
 	{
@@ -809,123 +777,8 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "wrapper.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1666,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								86,
-								86
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 342,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								246,
-								246
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/vader/Documents/gvv/verilog/fft_module_full.pcf",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 247,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/vader/Documents/gvv/verilog/fft_module_full.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5718,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
