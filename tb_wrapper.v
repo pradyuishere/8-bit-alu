@@ -15,15 +15,15 @@ module tb_wrapper();
 		$dumpfile("wrapper.vcd");
 		$dumpvars;
 		clk = 0;
-		$monitor("data_out : %b, data_type : %d\nrst : %d", data_out, data_type, rst);
+		$monitor("data_out : %d, data_type : %d\nrst : %d", data_out, data_type, rst);
 		rst = 1;
-		#50 rst = 0;
-		#10000 $finish;
+		#100000 rst = 0;
+		#10000000 $finish;
 	end
 
 	always
 	begin
-		#5 clk = ~clk;
+		#1 clk = ~clk;
 	end
 
 endmodule // tb_wrapper

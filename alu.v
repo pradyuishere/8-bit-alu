@@ -243,12 +243,12 @@ module alu
               
               if(opcode == 16)
                 begin
-                  $display("operand_A : %b", operand_A);
+                  // $display("operand_A : %b", operand_A);
                   result_out[0] <= operand_A[7];
                   result_out[7:1] <= operand_A[6:0];
-                  $display("operand_A[7] : %b", operand_A[7]);
-                  $display("operand_A[6:0] : %b", operand_A[6:0]);
-                  $display("result_out : %b", result_out);
+                  // $display("operand_A[7] : %b", operand_A[7]);
+                  // $display("operand_A[6:0] : %b", operand_A[6:0]);
+                  // $display("result_out : %b", result_out);
                 end
               
               if(opcode == 17)

@@ -10,7 +10,27 @@ module wrapper(
 	wire signed [7:0] operand_A, operand_B, result_out_cpu;
 	wire [7:0] opcode_out_cpu, pc_out_cpu;
 
+	reg clk_wrapper;
+	reg[26:0] delay;
 
+	initial begin
+		delay = 0;
+		clk_wrapper = 0;
+	end // initial
+
+	always@(posedge clk)
+	begin
+		if(next_out_cpu == 1)
+		begin
+			next_out_cpu <= 0;
+		end
+		delay = delay+1;
+		if(delay == 27'b101111101011110000100000)
+		begin
+			delay = 0;
+			clk_wrapper = ~clk_wrapper;
+		end
+	end
 
 	cpu cpu1(
 		.clk(clk),
@@ -28,7 +48,7 @@ module wrapper(
 		);
 
 
-	always@(posedge clk)
+	always@(posedge clk_wrapper)
 	begin
 		// $display("data_out_cpu : %d", data_out_cpu);
 		// $display("pc_out_cpu : %d", pc_out_cpu);
@@ -52,7 +72,7 @@ module wrapper(
 				data_type = (data_type+1)%7;
 				if(data_type == 0)
 				begin
-					$display("opcode_out_cpu : %b",opcode_out_cpu);
+					// $display("opcode_out_cpu : %b",opcode_out_cpu);
 					data_out = opcode_out_cpu;
 				end
 

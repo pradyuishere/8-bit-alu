@@ -195,7 +195,7 @@ instr_mem[11]=16'b1100001100000011;
 
 				if(this_instr[7:3]==5'b10101)	//instr_xra
 				begin
-					$display("this_instr[2:0] : %d", this_instr[2:0]);
+					// $display("this_instr[2:0] : %d", this_instr[2:0]);
 					operand_A_alu <= registers[0];
 					operand_B_alu <= registers[this_instr[2:0]];
 					opcode_alu <= 10;
@@ -312,7 +312,7 @@ instr_mem[11]=16'b1100001100000011;
 				if(this_instr[7:3]==5'b10000 || this_instr[7:3]==5'b10001 || this_instr[7:3]==5'b10010 || this_instr[7:3]==5'b10010 || this_instr[7:3]==5'b10100 || this_instr[7:3]==5'b10110 || this_instr[7:3]==5'b10101 ||
 					this_instr[7:0]==8'b00010111 || this_instr[7:0]==8'b00011111 || this_instr[7:0]==8'b00001111 || this_instr[7:0]==8'b00000111 || this_instr[7:0]==8'b00101111 || this_instr[7:0]==8'b00111111)
 				begin
-					$display("result_out_alu : %b", result_out_alu);
+					// $display("result_out_alu : %b", result_out_alu);
 					registers[0] <= result_out_alu;
 					carry <= carry_out_alu;
 					borrow <= borrow_out_alu;

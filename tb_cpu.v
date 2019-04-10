@@ -4,7 +4,7 @@ module tb_cpu();
 	reg next_out;
 	wire data_out, carry_out, borrow_out, result_ready;
 	wire signed [7:0] operand_A_out, operand_B_out, result_out;
-	wire [7:0] pc_out, opcode_out;
+	wire signed [7:0] pc_out, opcode_out;
 
 	cpu cpu1(
 		.clk(clk),
@@ -27,7 +27,7 @@ module tb_cpu();
 		rst = 1;
 		#50 rst = 0;
 		next_out = 1;
-		$monitor("\noperand_A_out : %b, operand_B_out : %b, opcode : %b \nresult_out : %b, carry_out : %b, borrow_out : %b\n pc : %d, data_out : %b\n", operand_A_out, operand_B_out, opcode_out, result_out, carry_out, borrow_out, pc_out, data_out);
+		$monitor("\noperand_A_out : %d, operand_B_out : %d, opcode : %d \nresult_out : %d, carry_out : %d, borrow_out : %d\n pc : %d, data_out : %d\n", operand_A_out, operand_B_out, opcode_out, result_out, carry_out, borrow_out, pc_out, data_out);
 		#20000 $finish;
 	end
 
