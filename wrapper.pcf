@@ -13,4 +13,3 @@ set_io data_out[7] R10
 set_io data_type[0] T9
 set_io data_type[1] T11
 set_io data_type[2] T10
-set_io data_type[3] T14
