@@ -13,6 +13,9 @@ module wrapper(
 	reg clk_wrapper;
 	reg[26:0] delay;
 
+	reg clk_cpu;
+	reg [26:0]delay_cpu;
+
 	initial begin
 		delay = 0;
 		clk_wrapper = 0;
@@ -32,8 +35,18 @@ module wrapper(
 		end
 	end
 
+	always@(posedge clk)
+	begin
+		delay_cpu = delay_cpu+1;
+		if(delay_cpu == 27'b1010)
+		begin
+			delay_cpu = 0;
+			clk_cpu = ~clk_cpu;
+		end
+	end
+
 	cpu cpu1(
-		.clk(clk),
+		.clk(clk_cpu),
 		.rst(rst_cpu),
 		.next_out(next_out_cpu),
 		.data_out(data_out_cpu),
