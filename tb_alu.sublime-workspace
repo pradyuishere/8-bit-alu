@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"resu",
+				"result_out_alu"
+			],
+			[
+				"opern",
+				"operand_A"
+			],
+			[
+				"result",
+				"result_out"
+			],
+			[
+				"resul",
+				"result_out"
+			],
+			[
+				"opera",
+				"operand_A"
+			],
+			[
 				"Opcode",
 				"opcode_out_cpu"
 			],
@@ -14,10 +34,6 @@
 			[
 				"pc_",
 				"pc_out_cpu"
-			],
-			[
-				"resul",
-				"result_ready_cpu"
 			],
 			[
 				"dat",
@@ -58,10 +74,6 @@
 			[
 				"data_",
 				"data_out"
-			],
-			[
-				"opera",
-				"operand_B"
 			],
 			[
 				"opcode",
@@ -126,10 +138,6 @@
 			[
 				"ne",
 				"next_out"
-			],
-			[
-				"result",
-				"result_ready"
 			],
 			[
 				"borrow",
@@ -508,55 +516,10 @@
 	"buffers":
 	[
 		{
-			"file": "alu.v",
+			"file": "/home/vader/Documents/intro-hdl/pipeline/wide_adder.v",
 			"settings":
 			{
-				"buffer_size": 8169,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "cpu.v",
-			"settings":
-			{
-				"buffer_size": 8160,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "wrapper.v",
-			"settings":
-			{
-				"buffer_size": 1666,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "tb_cpu.v",
-			"settings":
-			{
-				"buffer_size": 936,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "tb_wrapper.v",
-			"settings":
-			{
-				"buffer_size": 441,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "compiler.py",
-			"settings":
-			{
-				"buffer_size": 3395,
-				"encoding": "UTF-8",
+				"buffer_size": 1422,
 				"line_ending": "Unix"
 			}
 		}
@@ -605,12 +568,28 @@
 	},
 	"file_history":
 	[
+		"/home/vader/Documents/intro-hdl/pipeline/rd.v",
+		"/home/vader/Documents/intro-hdl/pipeline/rd_tb.v",
+		"/home/vader/Documents/intro-hdl/comm/jtag/tap_controller.v",
+		"/home/vader/Documents/intro-hdl/comm/jtag/adder.v",
+		"/home/vader/Documents/intro-hdl/comm/jtag/adder_tb.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/uart_tb.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/utx.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/urx.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/uart.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/fifo.v",
+		"/home/vader/Documents/intro-hdl/comm/serial/counter.v",
+		"/home/vader/Documents/gvv/8-bit-alu/compiler.py",
+		"/home/vader/Documents/gvv/8-bit-alu/tb_wrapper.v",
+		"/home/vader/Documents/gvv/8-bit-alu/tb_cpu.v",
+		"/home/vader/Documents/gvv/8-bit-alu/wrapper.v",
+		"/home/vader/Documents/gvv/8-bit-alu/cpu.v",
+		"/home/vader/Documents/gvv/8-bit-alu/alu.v",
 		"/home/vader/Documents/gvv/8-bit-alu/cpu.v4",
 		"/home/vader/Documents/data_course/c7/EE16BTECH11017-linked_list.c",
 		"/home/vader/Documents/data_course/c7/linked_list.c",
 		"/home/vader/Documents/data_course/classes/linked_list.c",
 		"/home/vader/Documents/gvv/8-bit-alu/tb_alu.v",
-		"/home/vader/Documents/gvv/8-bit-alu/alu.v",
 		"/home/vader/Documents/gvv/8-bit-alu/alu.vtb_",
 		"/home/vader/Documents/data_course/temp.c",
 		"/home/vader/Desktop/quiksort.c",
@@ -716,13 +695,7 @@
 		"/home/vader/verilog_soft/picorv32-master/testbench.v",
 		"/home/vader/verilog_soft/picorv32-master/testbench_ez.v",
 		"/home/vader/Documents/data_course/linearSearch.c",
-		"/home/vader/Documents/data_course/binarySearchRecursive.c",
-		"/home/vader/Documents/data_course/binarySearch.c",
-		"/home/vader/Documents/data_course/linearSearchRecursive.c",
-		"/home/vader/Documents/gvv/multiplier.v",
-		"/home/vader/Documents/gvv/fft_module.v",
-		"/home/vader/Documents/gvv/fft_tb.v",
-		"/home/vader/Documents/gvv/fft_tb"
+		"/home/vader/Documents/data_course/binarySearchRecursive.c"
 	],
 	"find":
 	{
@@ -740,6 +713,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rd2",
+			"rx_done_tick",
+			"b10100",
+			"b00000111",
+			"cmp",
+			"b00000111",
 			"data_out",
 			"carry",
 			"program",
@@ -806,179 +785,37 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "alu.v",
+					"file": "/home/vader/Documents/intro-hdl/pipeline/wide_adder.v",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8169,
+						"buffer_size": 1422,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1378,
-								1378
+								457,
+								457
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 741.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "cpu.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8160,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7909,
-								7909
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5928.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "wrapper.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1666,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1477,
-								1477
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 855.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "tb_cpu.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 936,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								914,
-								914
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "tb_wrapper.v",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 441,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								237,
-								237
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "compiler.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3395,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								389,
-								389
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 912.0,
+						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
