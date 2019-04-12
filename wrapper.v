@@ -67,9 +67,13 @@ module wrapper(
 			// $display("data_out_cpu : %d", data_out_cpu);
 			if(data_out_cpu == 1)
 			begin
-				// $display("If data_out_cpu == 1"); 
+				// $display("If data_out_cpu == 1");
 				next_out_cpu <= 0;
-				data_type = (data_type+1)%7;
+				data_type = (data_type+1);
+				if(data_type==7)
+				begin
+					data_type = 0;
+				end
 				if(data_type == 0)
 				begin
 					// $display("opcode_out_cpu : %b",opcode_out_cpu);

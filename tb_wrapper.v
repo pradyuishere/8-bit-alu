@@ -1,3 +1,6 @@
+`timescale 10ns / 1ns
+
+
 module tb_wrapper();
 
 	reg clk, rst;
@@ -17,8 +20,8 @@ module tb_wrapper();
 		clk = 0;
 		$monitor("data_out : %d, data_type : %d\nrst : %d", data_out, data_type, rst);
 		rst = 1;
-		#100000 rst = 0;
-		#10000000 $finish;
+		#1000000 rst = 0;
+		#100000000 $finish;
 	end
 
 	always
