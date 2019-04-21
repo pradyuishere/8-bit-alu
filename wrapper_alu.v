@@ -7,7 +7,7 @@ module wrapper_alu(
   output reg output_done
   );
     reg next_inputs, clk_alu, clk_pick;
-    reg [8:0] alu_delay, pick_delay;
+    reg [26:0] alu_delay, pick_delay;
     reg [4:0] opcode;
     reg [7:0] operand_A, operand_B;
     wire [7:0] result_out;
@@ -39,7 +39,7 @@ module wrapper_alu(
   initial begin
     clk_alu = 0;
     clk_pick = 0;
-    pick_delay = 255;
+    pick_delay = 27'd0 - 1;
     state_inputs = 0;
     state_outputs = 0;
     alu_delay = 0;
@@ -49,7 +49,7 @@ module wrapper_alu(
   always@(posedge clk)
   begin
     alu_delay = alu_delay+1;
-    if(alu_delay == 8'd1)
+    if(alu_delay == 27'd100)
     begin
       alu_delay = 0;
       clk_alu = ~clk_alu;
@@ -59,7 +59,7 @@ module wrapper_alu(
   always@(posedge clk)
   begin
     pick_delay = pick_delay+1;
-    if(pick_delay == 8'd10)
+    if(pick_delay == 27'd1000)
     begin
       pick_delay = 0;
       clk_pick = ~clk_pick;

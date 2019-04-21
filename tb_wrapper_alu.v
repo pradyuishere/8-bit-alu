@@ -22,9 +22,9 @@ module tb_wrapper_alu();
       data_in = 0;
       delay_test = 0;
       clk_test = 0;
-      #500
+      #50000
       rst = 0;
-      #10000 $finish;
+      #1000000 $finish;
     end
 
     always begin
