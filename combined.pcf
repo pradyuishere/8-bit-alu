@@ -1,15 +1,24 @@
 
 set_io clk R9
 
-set_io rst N6
-set_io data_out[0] N7
+set_io rst A11
+set_io data_in[0] A5
+set_io data_in[1] A2
+set_io data_in[2] C3
+set_io data_in[3] B4
+set_io data_in[4] D8
+set_io data_in[5] B9
+set_io data_in[6] B10
+set_io data_in[7] B11
+
+set_io data_out[0] N6
 set_io data_out[1] L7
-set_io data_out[2] M8
-set_io data_out[3] G5
-set_io data_out[4] P9
-set_io data_out[5] L9
-set_io data_out[6] N9
-set_io data_out[7] R10
-set_io data_type[0] T9
-set_io data_type[1] T11
-set_io data_type[2] T10
+set_io data_out[2] G5
+set_io data_out[3] L9
+set_io data_out[4] R10
+set_io data_out[5] T11
+set_io data_out[6] T14
+set_io data_out[7] T15
+
+set_io next_in B7
+set_io output_done R14

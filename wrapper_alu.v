@@ -49,7 +49,7 @@ module wrapper_alu(
   always@(posedge clk)
   begin
     alu_delay = alu_delay+1;
-    if(alu_delay == 27'd100)
+    if(alu_delay == 27'd5000000)
     begin
       alu_delay = 0;
       clk_alu = ~clk_alu;
@@ -59,7 +59,7 @@ module wrapper_alu(
   always@(posedge clk)
   begin
     pick_delay = pick_delay+1;
-    if(pick_delay == 27'd1000)
+    if(pick_delay == 27'd50000000)
     begin
       pick_delay = 0;
       clk_pick = ~clk_pick;
