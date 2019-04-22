@@ -1,15 +1,15 @@
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(56700);
+  Serial.begin(9600);
   pinMode(2, INPUT);  //data_out
-  pinMode(3, OUTPUT); //data_out[0]
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);  //data_out[7]
+  pinMode(3, INPUT); //data_out[0]
+  pinMode(4, INPUT);
+  pinMode(5, INPUT);
+  pinMode(6, INPUT);
+  pinMode(7, INPUT);
+  pinMode(8, INPUT);
+  pinMode(9, INPUT);
+  pinMode(10, INPUT);  //data_out[7]
 }
 
 int arr[8];
@@ -21,8 +21,11 @@ int get_int()
   for(int iter=0; iter<8; iter++)
   {
     arr[7-iter] = digitalRead(iter+3);
+    Serial.print(arr[7-iter]);
   }
-  if(arr[10] == 1)
+  Serial.println();
+    
+  if(arr[0] == 1)
   {
     neg = 1;
     for(int iter = 0; iter<8; iter++)
@@ -33,7 +36,7 @@ int get_int()
 
   for(int iter = 0; iter<8; iter++)
   {
-    sum+=2<<iter*arr[7-iter];
+    sum+=(1<<iter)*arr[7-iter];
   }
 
   if(neg==1)
@@ -45,7 +48,7 @@ int get_int()
 
 void loop() {
   while(digitalRead(2)!=0);
-  Serial.println(str(get_int()));
+  Serial.println(get_int());
   delay(1000);
   // put your main code here, to run repeatedly:
 
