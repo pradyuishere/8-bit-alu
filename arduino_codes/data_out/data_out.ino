@@ -26,9 +26,9 @@ int get_int()
   for(int iter=0; iter<8; iter++)
   {
     arr[7-iter] = digitalRead(iter+3);
-    Serial.print(arr[7-iter]);
+    //Serial.print(arr[7-iter]);
   }
-  Serial.println();
+  //Serial.println();
     
   if(arr[0] == 1)
   {
@@ -53,10 +53,73 @@ int get_int()
 
 void loop() {
   while(digitalRead(2)!=0);
-  Serial.println(get_int());
-  lcd.setCursor(0, 1);
-  lcd.print(get_int());
-  delay(1000);
-  // put your main code here, to run repeatedly:
+  int num;
+  
+  num = get_int();
+  Serial.print("result_out : ");
+  Serial.println(num);
+  lcd.print("result : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.print("borrow_out: ");
+  Serial.println(num);
+  lcd.print("borrow_out : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.print("carry_out : ");
+  Serial.println(num);
+  lcd.print("carry_out : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.print("zero : ");
+  Serial.println(num);
+  lcd.print("zero : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.print("negative : ");
+  Serial.println(num);
+  lcd.print("negative : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.print("overflow : ");
+  Serial.println(num);
+  lcd.print("overflow : ");
+  lcd.print(num);
+  delay(990);
+  lcd.clear();
+  delay(10);
+
+
+  num = get_int();
+  Serial.println("*********");
+  lcd.print("**********");
+  delay(500);
+  lcd.clear();
+  delay(10);
 
 }
