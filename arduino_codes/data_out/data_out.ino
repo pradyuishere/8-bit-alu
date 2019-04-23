@@ -1,6 +1,11 @@
+#include<LiquidCrystal.h>
+
+LiquidCrystal lcd(16, 15, 14, 13, 12, 11);
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  lcd.begin(16, 2);
   pinMode(2, INPUT);  //data_out
   pinMode(3, INPUT); //data_out[0]
   pinMode(4, INPUT);
@@ -49,6 +54,8 @@ int get_int()
 void loop() {
   while(digitalRead(2)!=0);
   Serial.println(get_int());
+  lcd.setCursor(0, 1);
+  lcd.print(get_int());
   delay(1000);
   // put your main code here, to run repeatedly:
 
