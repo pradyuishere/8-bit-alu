@@ -86,10 +86,10 @@ void loop() {
 
 
   num = get_int();
-  Serial.print("zero : ");
-  Serial.println(num);
-  lcd.print("zero : ");
-  lcd.print(num);
+  //Serial.print("zero : ");
+  //Serial.println(num);
+  //lcd.print("zero : ");
+  //lcd.print(num);
   delay(990);
   lcd.clear();
   delay(10);
