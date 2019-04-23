@@ -49,6 +49,18 @@ int start = 0;
 int start1 = 0;
 
 void loop() {
+    int opcode, op_A, op_B, carry_in, borrow_in;
+    opcode = Serial.parseInt();
+    op_A = Serial.parseInt();
+    op_B = Serial.parseInt();
+    carry_in = Serial.parseInt();
+    borrow_in = Serial.parseInt();
+    /*Serial.println(opcode);
+    Serial.println(op_A);
+    Serial.println(op_B);
+    Serial.println(carry_in);
+    Serial.println(borrow_in);
+    */
     if(start1==0)
     {
       digitalWrite(11, 1);
@@ -64,11 +76,40 @@ void loop() {
       delay(500);
       start = 1;
     }
-    bin_write(count);
+    
+    bin_write(opcode);
     count++;
     if(count==10) count = 0;
-    Serial.println(count);
-    delay(7000);
-  // put your main code here, to run repeatedly:
+    Serial.print("opcode : ");
+    Serial.println(opcode);
+    delay(1000);
 
+        bin_write(op_A);
+    count++;
+    if(count==10) count = 0;
+    Serial.print("op_A : ");
+    Serial.println(op_A);
+    delay(1000);
+
+        bin_write(op_B);
+    count++;
+    if(count==10) count = 0;
+    Serial.print("op_B : ");
+    Serial.println(op_B);
+    delay(1000);
+
+        bin_write(carry_in);
+    count++;
+    if(count==10) count = 0;
+    Serial.print("carry_in : ");
+    Serial.println(carry_in);
+    delay(1000);
+
+        bin_write(borrow_in);
+    count++;
+    if(count==10) count = 0;
+    Serial.print("borrow_in : ");
+    Serial.println(borrow_in);
+    Serial.println("*****************");
+    delay(1000);
 }
