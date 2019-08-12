@@ -6,8 +6,6 @@ module alu_tb();
 	wire signed [7:0] result_out;
 	wire zero_out, negative_out, result_ready, carry_out, overflow_out, borrow_out;
 
-	integer delay;
-
 	alu alu1(
 		.clk(clk),
 		.opcode(opcode),
@@ -27,9 +25,9 @@ module alu_tb();
 		.overflow(overflow_out)
 		);
 
-	initial
+	initial 
 		begin
-			$monitor("input_ready : %d, carry_out : %d, borrow_out : %d\nresult_out : %d\n\nopcode : %d, operand_A : %d, operand_B : %d\ncarry_in : %d, borrow_in : %d, delay : %d", input_ready, carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in, delay);
+			$monitor("carry_out : %d, borrow_out : %d\nresult_out : %d\n\nopcode : %d, operand_A : %d, operand_B : %d\ncarry_in : %d, borrow_in : %d", carry_out, borrow_out, result_out, opcode, operand_A, operand_B, carry_in, borrow_in);
 			clk = 0;
 			rst = 1;
 			opcode = 0;
@@ -39,7 +37,6 @@ module alu_tb();
 			enable = 1;
 			carry_in = 1;
 			borrow_in = 1;
-			delay = 0;
 			#5 rst = 0;
 			#200$finish;
 		end
@@ -48,15 +45,6 @@ module alu_tb();
 		begin
 			#5 clk = ~clk;
 		end
-	always@(posedge clk)
-	begin
-		delay = delay + 1;
-		if(delay == 10)
-		begin
-			delay = 0;
-			input_ready = ~input_ready;
-		end
-	end
 
 	always@(posedge clk)
 	begin
@@ -66,6 +54,7 @@ module alu_tb();
 			operand_A <= $random;
 			operand_B <= $random;
 		// end
+		input_ready <= 1;
 	end
 
 endmodule
